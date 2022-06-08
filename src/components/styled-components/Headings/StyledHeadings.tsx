@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-export const StyledHeadings = styled.h1`
-font-size: 2rem;
+interface IHeadingsProps {
+    fontsize?: string
+}
+
+export const StyledHeading = styled.h1`
+font-size: ${(props: IHeadingsProps) => props.fontsize || "2 rem"};
 text-align: center;
 padding: 10px 0px;
 margin: 0;
