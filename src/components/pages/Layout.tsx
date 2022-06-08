@@ -1,6 +1,8 @@
 import React from 'react'
 import { Outlet } from 'react-router'
-import GlobalStyle from '../styled-components/GlobalStyles'
+import { Link } from 'react-router-dom'
+import GlobalStyle from '../GlobalStyles'
+import Navbar from '../Navbar'
 import { StyledHeading } from '../styled-components/Headings/StyledHeadings'
 import { StyledLayoutWrapper } from '../styled-components/Wrappers/StyledWrappers'
 
@@ -9,7 +11,7 @@ export default function Layout() {
         <>
             <GlobalStyle />
             <StyledLayoutWrapper>
-                <StyledHeading>Feeding Animals</StyledHeading>
+                <Navbar />
                 <Outlet></Outlet>
             </StyledLayoutWrapper>
         </>

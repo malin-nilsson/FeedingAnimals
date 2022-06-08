@@ -18,7 +18,7 @@ export default function Home() {
     useEffect(() => {
         if (animals.length !== 0) return;
 
-        axios.get(animalsFromApi)
+        axios.get<IAnimal[]>(animalsFromApi)
             .then((response) => {
                 response.data.splice(0, 2);
                 setAnimals(response.data);
@@ -28,7 +28,6 @@ export default function Home() {
 
     return (
         <>
-            <Link to="/">Home</Link>
             <StyledBigWrapper>
                 <Animals animals={animals} />
             </StyledBigWrapper>

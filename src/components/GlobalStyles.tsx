@@ -16,6 +16,10 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: auto;
   }
+
+a {
+  color: #000;
+}
 `;
 
 export default GlobalStyle;

@@ -18,8 +18,20 @@ margin: 0 auto;
 @media (min-width: 768px) {
   flex-direction: row;
   align-items:flex-start;
-  width: 80%;
+  justify-content: center;
+  width: 85%;
   }
+
+a {
+  color: #000;
+  text-decoration: none;
+  width: 100%;
+
+@media (min-width: 768px) {
+  width: 30%;
+  }
+}
+
 `
 
 export const StyledSmallWrapper = styled(StyledBigWrapper)`
@@ -28,9 +40,13 @@ export const StyledSmallWrapper = styled(StyledBigWrapper)`
   justify-content:  center;
   width: 100%;
   padding: 20px 0px;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #c2c2c2;
+  }
 
   @media (min-width: 768px) {
-  width: 30%;
   align-items: center;
   justify-content:  flex-start;
 
