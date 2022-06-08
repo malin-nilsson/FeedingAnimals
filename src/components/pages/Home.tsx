@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IAnimal } from '../models/IAnimal'
+import { IAnimal } from '../../models/IAnimal'
+import Animals from '../Animals';
+import { StyledSmallWrapper, StyledBigWrapper } from '../styled-components/Wrappers/StyledWrappers';
 
 const animalsFromApi = "https://animals.azurewebsites.net/api/animals";
 
@@ -18,23 +20,18 @@ export default function Home() {
 
         axios.get(animalsFromApi)
             .then((response) => {
+                response.data.splice(0, 2);
                 setAnimals(response.data);
                 saveInLocalStorage(response.data)
             })
     })
 
-
-
     return (
         <>
             <Link to="/">Home</Link>
-
-            {animals.map((item) => {
-                return (<div key={item.id}>
-                    <h3>{item.name}</h3>
-                </div>
-                )
-            })}
+            <StyledBigWrapper>
+                <Animals animals={animals} />
+            </StyledBigWrapper>
         </>
     )
 }

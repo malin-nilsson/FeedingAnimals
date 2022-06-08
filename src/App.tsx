@@ -1,11 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Layout from './components/Layout';
-import Animal from './components/Animal';
-import NotFound from './components/NotFound';
+import Home from './components/pages/Home';
+import Layout from './components/pages/Layout';
+import Animal from './components/pages/Animal';
+import NotFound from './components/pages/NotFound';
 
 function App() {
   return (
