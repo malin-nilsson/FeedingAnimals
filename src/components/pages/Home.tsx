@@ -1,36 +1,19 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import { IAnimal } from '../../models/IAnimal'
-import Animals from '../Animals';
-import { StyledSmallWrapper, StyledBigWrapper } from '../styled-components/Wrappers/StyledWrappers';
+import ShowAllAnimals from '../ShowAllAnimals';
+import { LandingPageWrapperLg } from '../styled-components/Wrappers/StyledWrappers';
 
-const animalsFromApi = "https://animals.azurewebsites.net/api/animals";
+interface IHomeProps {
+    animals: IAnimal[];
+}
 
-export default function Home() {
-    const [animals, setAnimals] = useState<IAnimal[]>([]);
-
-    JSON.parse(localStorage.getItem("Animals") || "[]");
-
-    const saveInLocalStorage = (allAnimals: IAnimal[]) => {
-        localStorage.setItem("Animals", JSON.stringify(allAnimals));
-    }
-    useEffect(() => {
-        if (animals.length !== 0) return;
-
-        axios.get<IAnimal[]>(animalsFromApi)
-            .then((response) => {
-                response.data.splice(0, 2);
-                setAnimals(response.data);
-                saveInLocalStorage(response.data)
-            })
-    })
+export default function Home(props: IHomeProps) {
 
     return (
         <>
-            <StyledBigWrapper>
-                <Animals animals={animals} />
-            </StyledBigWrapper>
+            <LandingPageWrapperLg>
+                <ShowAllAnimals animals={props.animals} />
+            </LandingPageWrapperLg>
         </>
     )
 }

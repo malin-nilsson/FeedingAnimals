@@ -20,6 +20,9 @@ const GlobalStyle = createGlobalStyle`
 a {
   color: #000;
 }
+
+
+
 `;
 
 export default GlobalStyle;
