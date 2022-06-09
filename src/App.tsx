@@ -43,23 +43,18 @@ function App() {
   });
 
   const feedAnimal = (a: IAnimal) => {
-    for (let i = 0; i < animals.length; i++) {
-      if (animals[i].id === a.id) {
+    //local storage
+    let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
 
-        //local storage
-        let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
-
-        for (let i = 0; i < sameItem.length; i++) {
-          if (a.id === sameItem[i].id) {
-            sameItem[i].isFed = true;
-            sameItem[i].lastFed = new Date().toLocaleTimeString();
-            setAnimal(sameItem[i])
-            const newAnimalList = [...animals]
-            newAnimalList.splice(i, 0, sameItem[i])
-            setAnimals(newAnimalList)
-            localStorage.setItem("Animals", JSON.stringify(animals))
-          }
-        }
+    for (let j = 0; j < sameItem.length; j++) {
+      if (sameItem[j].id === a.id) {
+        sameItem[j].isFed = true;
+        sameItem[j].lastFed = new Date().toLocaleTimeString();
+        setAnimal(sameItem[j]);
+        const newAnimalList = [...animals];
+        newAnimalList.splice(j, 1, sameItem[j]);
+        localStorage.setItem("Animals", JSON.stringify(newAnimalList));
+        setAnimals(newAnimalList);
       }
     }
   }

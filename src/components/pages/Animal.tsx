@@ -55,10 +55,12 @@ export default function Animal(props: IAnimalProps) {
                     <StyledHeading padding="0px" fontsize="1rem">Född: {specificAnimal.yearOfBirth}</StyledHeading>
                     <StyledHeading padding="0px" fontsize="1rem">Latin: {specificAnimal.latinName}</StyledHeading>
                     <StyledHeading padding="0px" fontsize="1rem">Mediciner: {specificAnimal.medicine} </StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Hungrig: {props.animal.isFed ? "Nej" : "Ja"} </StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Åt senast: {props.animal.lastFed}</StyledHeading>
+                    <StyledHeading padding="0px" fontsize="1rem">Hungrig: {specificAnimal.isFed ? "Nej" : "Ja"} </StyledHeading>
+                    <StyledHeading padding="0px" fontsize="1rem">Åt senast: {specificAnimal.lastFed}</StyledHeading>
                     <p>{specificAnimal.longDescription}</p>
-                    <StyledButton onClick={((e) => { feedAnimal(specificAnimal) })}>Mata djur</StyledButton>
+                    <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}>
+                        Mata djur
+                    </StyledButton>
                 </SinglePageWrapperSm>
             </SinglePageWrapperLg>
         </>
