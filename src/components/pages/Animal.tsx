@@ -25,9 +25,9 @@ export default function Animal(props: IAnimalProps) {
             yearOfBirth: 0,
         }
     );
+    const [disable, setDisabled] = useState(false);
 
     let params = useParams();
-
 
     useEffect(() => {
         const storedAnimals = JSON.parse(localStorage.getItem("Animals") || "");
@@ -39,9 +39,9 @@ export default function Animal(props: IAnimalProps) {
         }
     }, [props.animal])
 
-
     const feedAnimal = (a: IAnimal) => {
         props.feedAnimal(a)
+        setDisabled(true);
     };
 
     return (
@@ -58,8 +58,8 @@ export default function Animal(props: IAnimalProps) {
                     <StyledHeading padding="0px" fontsize="1rem">Hungrig: {specificAnimal.isFed ? "Nej" : "Ja"} </StyledHeading>
                     <StyledHeading padding="0px" fontsize="1rem">Åt senast: {specificAnimal.lastFed}</StyledHeading>
                     <p>{specificAnimal.longDescription}</p>
-                    <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}>
-                        Mata djur
+                    <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
+                        disabled={disable}> {disable ? "Djuret är matat" : "Mata djur"}
                     </StyledButton>
                 </SinglePageWrapperSm>
             </SinglePageWrapperLg>

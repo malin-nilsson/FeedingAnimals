@@ -11,4 +11,11 @@ padding: 10px;
 &:hover {
     cursor: pointer;
 }
+
+&:disabled {
+    border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: unset;
+}
 `
