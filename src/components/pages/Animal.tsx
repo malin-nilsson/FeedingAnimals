@@ -25,9 +25,19 @@ export default function Animal(props: IAnimalProps) {
             yearOfBirth: 0,
         }
     );
-    const [disable, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     let params = useParams();
+
+    const checkBgImage = (animal: IAnimal) => {
+        if (animal.id === 1) {
+            return "/assets/cat.jpg";
+        } else if (animal.id === 2) {
+            return "/assets/dog.jpg";
+        } else {
+            return animal.imageUrl;
+        }
+    }
 
     useEffect(() => {
         const storedAnimals = JSON.parse(localStorage.getItem("Animals") || "");
@@ -39,6 +49,14 @@ export default function Animal(props: IAnimalProps) {
         }
     }, [props.animal])
 
+    useEffect(() => {
+        if (specificAnimal.isFed === true) {
+            setDisabled(true);
+            console.log(disabled)
+        }
+    }, [specificAnimal.isFed])
+
+
     const feedAnimal = (a: IAnimal) => {
         props.feedAnimal(a)
         setDisabled(true);
@@ -48,7 +66,7 @@ export default function Animal(props: IAnimalProps) {
         <>
             <SinglePageWrapperLg>
                 <SingleImageWrapper>
-                    <img src={specificAnimal.imageUrl} alt={specificAnimal.name} />
+                    <img src={checkBgImage(specificAnimal)} alt={specificAnimal.name} />
                 </SingleImageWrapper>
                 <SinglePageWrapperSm>
                     <StyledHeading padding="0px" fontsize="1.2rem">{specificAnimal.name}</StyledHeading>
@@ -59,7 +77,8 @@ export default function Animal(props: IAnimalProps) {
                     <StyledHeading padding="0px" fontsize="1rem">Åt senast: {specificAnimal.lastFed}</StyledHeading>
                     <p>{specificAnimal.longDescription}</p>
                     <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
-                        disabled={disable}> {disable ? "Djuret är matat" : "Mata djur"}
+                        disabled={disabled}
+                    > {specificAnimal.isFed ? "Djuret är matat" : "Mata djur"}
                     </StyledButton>
                 </SinglePageWrapperSm>
             </SinglePageWrapperLg>

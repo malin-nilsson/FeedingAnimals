@@ -39,6 +39,7 @@ function App() {
       .then((response) => {
         setAnimals(response.data);
         saveToLocalStorage(response.data);
+
       });
   });
 

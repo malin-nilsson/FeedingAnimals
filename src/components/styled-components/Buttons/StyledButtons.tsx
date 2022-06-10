@@ -13,9 +13,10 @@ padding: 10px;
 }
 
 &:disabled {
-    border: 1px solid #999999;
+border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
   cursor: unset;
+  pointer-events:none;
 }
 `
