@@ -47,13 +47,23 @@ export default function Animal(props: IAnimalProps) {
     console.log(date)
 
     useEffect(() => {
-        if (params.id) {
+        if (props.animals.length > 0) {
             for (let i = 0; i < props.animals.length; i++) {
-                if (props.animals[i].id === parseInt(params.id)) {
+                if (props.animals[i].id.toString() === params.id) {
                     setSpecificAnimal(props.animals[i]);
                 }
             }
-        }
+        } else {
+            const animalStorage = JSON.parse(localStorage.getItem("Animals") || "[]");
+
+            for (let i = 0; i < animalStorage.length; i++) {
+
+                if (animalStorage[i].id.toString() === params.id) {
+
+                    setSpecificAnimal(animalStorage[i]);
+                }
+            }
+        };
     }, []);
 
     useEffect(() => {
@@ -74,7 +84,7 @@ export default function Animal(props: IAnimalProps) {
 
     return (
         <>
-            <StyledParagraph padding="10px 0px" querypadding="20px 0px">
+            <StyledParagraph padding="10px 0px" querypadding="20px 0px" queryjustify="center">
                 <Link to="/">Tillbaka till alla djur</Link>
             </StyledParagraph>
             <SinglePageWrapperLg>
@@ -84,12 +94,12 @@ export default function Animal(props: IAnimalProps) {
                 <SinglePageWrapperSm>
                     <SmallHeading fontsize="1.8rem">{specificAnimal.name}</SmallHeading>
 
-                    {specificAnimal.isFed ? <StyledParagraph direction="row" justify="center" queryjustify="flex-start" padding="0px" fontsize="1.1rem" align="center">
-                        Just nu är {specificAnimal.name} mätt och belåten
+                    {specificAnimal.isFed ? <StyledParagraph querydirection="row" justify="center" queryjustify="flex-start" padding="0px" fontsize="1.1rem" align="center">
+                        Just nu är {specificAnimal.name} mätt
                         <NotHungryIcon />
                     </StyledParagraph> :
 
-                        <StyledParagraph direction="row" padding="0px" justify="center" queryjustify="flex-start" fontsize="1.1rem" align="center">
+                        <StyledParagraph querydirection="row" padding="0px" justify="center" queryjustify="flex-start" fontsize="1.1rem" align="center">
                             Just nu är {specificAnimal.name} hungrig
                             <HungryIcon />
                         </StyledParagraph>
@@ -102,7 +112,7 @@ export default function Animal(props: IAnimalProps) {
                         disabled={disabled}>
                         {specificAnimal.isFed ? specificAnimal.name + " är redan matad" : "Mata " + specificAnimal.name}</StyledButton>
                     <SmallHeading fontsize="1.2rem" padding="10px 0px 0px">Mer om {specificAnimal.name}</SmallHeading>
-                    <StyledParagraph align="left" padding="0px">
+                    <StyledParagraph align="left" padding="0px" querydirection="column">
                         <span>Född: {specificAnimal.yearOfBirth}</span>
                         <span>Mediciner: {specificAnimal.medicine} </span>
                         <span>Latinskt namn: {specificAnimal.latinName}</span>
@@ -116,4 +126,5 @@ export default function Animal(props: IAnimalProps) {
         </>
     )
 }
+
 

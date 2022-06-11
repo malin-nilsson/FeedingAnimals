@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
 interface IParagraphProps {
-    fontsize?: string,
-    padding?: string,
-    display?: string,
-    align?: string,
-    justify?: string,
-    direction?: string,
-    color?: string,
-    querypadding?: string,
-    queryjustify?: string
+  fontsize?: string,
+  padding?: string,
+  display?: string,
+  align?: string,
+  justify?: string,
+  direction?: string,
+  color?: string,
+  querydisplay?: string,
+  querydirection?: string,
+  querypadding?: string,
+  queryjustify?: string
 }
 
 export const StyledParagraph = styled.p`
@@ -27,7 +29,8 @@ gap: 10px;
 
 @media (min-width: 768px) {
   padding: ${(props: IParagraphProps) => props.querypadding || "0px"};
-  display: ${(props: IParagraphProps) => props.display || "flex"};
+  display: ${(props: IParagraphProps) => props.querydisplay || "flex"};
+  flex-direction: ${(props: IParagraphProps) => props.querydirection || "column"};
   justify-content: ${(props: IParagraphProps) => props.queryjustify || "flex-start"};
   }
 
