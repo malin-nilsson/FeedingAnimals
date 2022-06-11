@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { IAnimal } from '../../models/IAnimal';
+import HungryIcon from '../HungryIcon';
+import NotHungryIcon from '../NotHungryIcon';
 import { StyledButton } from '../styled-components/Buttons/StyledButtons';
 import { SmallHeading } from '../styled-components/Headings/StyledHeadings';
 import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
@@ -72,7 +74,7 @@ export default function Animal(props: IAnimalProps) {
 
     return (
         <>
-            <StyledParagraph>
+            <StyledParagraph padding="10px 0px" querypadding="20px 0px">
                 <Link to="/">Tillbaka till alla djur</Link>
             </StyledParagraph>
             <SinglePageWrapperLg>
@@ -82,12 +84,19 @@ export default function Animal(props: IAnimalProps) {
                 <SinglePageWrapperSm>
                     <SmallHeading fontsize="1.8rem">{specificAnimal.name}</SmallHeading>
 
-                    <StyledParagraph padding="0px" fontsize="1.1rem" align="left">
-                        Just nu är {specificAnimal.name}  {specificAnimal.isFed ? "mätt och belåten" : "hungrig"}.
+                    {specificAnimal.isFed ? <StyledParagraph direction="row" justify="center" queryjustify="flex-start" padding="0px" fontsize="1.1rem" align="center">
+                        Just nu är {specificAnimal.name} mätt och belåten
+                        <NotHungryIcon />
+                    </StyledParagraph> :
 
-                    </StyledParagraph>
+                        <StyledParagraph direction="row" padding="0px" justify="center" queryjustify="flex-start" fontsize="1.1rem" align="center">
+                            Just nu är {specificAnimal.name} hungrig
+                            <HungryIcon />
+                        </StyledParagraph>
+                    }
+
                     <StyledParagraph padding="0px" fontsize="1.1rem" align="left">
-                        {specificAnimal.isFed ? specificAnimal.name + " åt senast: " + date : ""}
+                        {specificAnimal.isFed && specificAnimal.name + " åt senast: " + date}
                     </StyledParagraph>
                     <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
                         disabled={disabled}>
@@ -107,3 +116,4 @@ export default function Animal(props: IAnimalProps) {
         </>
     )
 }
+

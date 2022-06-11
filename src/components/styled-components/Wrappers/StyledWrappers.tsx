@@ -29,7 +29,7 @@ margin: 0 auto;
 
 @media (min-width: 768px) {
   flex-direction: row;
-  align-items:flex-start;
+  align-items: flex-start;
   justify-content: center;
   gap: 20px;
 
@@ -41,8 +41,14 @@ a {
   width: 100%;
 
 @media (min-width: 768px) {
-  width: 30%;
+  width: 40%;
   }
+
+  @media (min-width: 1100px) {
+    width: 30%;
+  }
+
+  
 }
 `
 
@@ -51,14 +57,14 @@ export const LandingPageWrapperSm = styled(LandingPageWrapperLg)`
   align-items: ${(props: IWrapperProps) => props.align || "flex-start"};
   justify-content: ${(props: IWrapperProps) => props.justify || "center"};
   width: ${(props: IWrapperProps) => props.width || "100%"};
-background-color: #f1f1f1;
+  background-color: #f1f1f1;
 
   @media (min-width: 768px) {
   align-items: ${(props: IWrapperProps) => props.align || "center"};
   justify-content: ${(props: IWrapperProps) => props.justify || "flex-start"};
   padding: 0px 0px 20px;
   margin: 13px 0px;
-min-height: 450px;
+  min-height: 450px;
   }
 `
 
@@ -95,9 +101,17 @@ background-position: ${(props: IWrapperProps) => props.backgroundpos || "top"};
 background-size: cover;
 background-repeat: no-repeat;
 height: 280px;
-width: 360px;
-`
+width: 100%;
 
+@media (min-width: 768px) {
+  height: 350px;
+width: 100%;
+  }
+
+@media (min-width: 1100px) {
+  width: 360px;
+  }
+`
 
 export const SingleImageWrapper = styled.div`
 width: 100%;
@@ -127,9 +141,14 @@ margin: 0 auto;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  width: 70%;
+  width: 90%;
   padding: 30px 0px;
   }
+
+  @media (min-width: 1100px) {
+    width: 70%;
+  }
+  
 `;
 
 export const SinglePageWrapperSm = styled(SinglePageWrapperLg)`
@@ -143,5 +162,6 @@ width: 100%;
   padding: 0px;
   }
 `;
+
 
 
