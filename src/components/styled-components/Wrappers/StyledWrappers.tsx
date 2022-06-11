@@ -58,6 +58,7 @@ background-color: #f1f1f1;
   justify-content: ${(props: IWrapperProps) => props.justify || "flex-start"};
   padding: 0px 0px 20px;
   margin: 13px 0px;
+min-height: 450px;
   }
 `
 
@@ -75,10 +76,13 @@ width: 100%;
 export const TextWrapper = styled.div`
 padding: 10px;
 
+@media (min-width: 768px) {
+  padding: 0px 20px;
+  }
+
 p {
   padding: 2px 0px;
   margin: 0;
-  font-size: 0.9rem;
 }
 `
 
@@ -100,6 +104,7 @@ width: 100%;
 
 @media (min-width: 768px) {
   width: 50%;
+  padding: 10px 0px;
   }
 `;
 
@@ -123,7 +128,7 @@ margin: 0 auto;
   align-items: flex-start;
   justify-content: center;
   width: 70%;
-  padding: 20px 0px;
+  padding: 30px 0px;
   }
 `;
 
@@ -135,6 +140,7 @@ width: 100%;
   align-items: flex-start;
   justify-content: center;
   width: 40%;
+  padding: 0px;
   }
 `;
 

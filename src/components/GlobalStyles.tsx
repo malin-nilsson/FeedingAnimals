@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: 12pt;
     background: #fff;
-    font-family: Open-Sans, Helvetica, Sans-Serif;
+    font-family: 'Lato', sans-serif;
   }
 
   img {

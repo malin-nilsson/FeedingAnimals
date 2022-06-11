@@ -25,36 +25,42 @@ function App() {
     }
   );
 
-  JSON.parse(localStorage.getItem("Animals") || "[]");
-
   const saveToLocalStorage = (animalList: IAnimal[]) => {
     localStorage.setItem("Animals", JSON.stringify(animalList));
   };
 
   useEffect(() => {
-    if (animals.length !== 0) return;
+    const animalStorage = localStorage.getItem("Animals");
+    if (animalStorage) {
+      setAnimals(JSON.parse(animalStorage));
+    } else if (!animalStorage) {
+      axios
+        .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
+        .then((response) => {
+          setAnimals(response.data);
+          saveToLocalStorage(response.data);
+        });
+    }
+  }, []);
 
-    axios
-      .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
-      .then((response) => {
-        setAnimals(response.data);
-        saveToLocalStorage(response.data);
-
-      });
-  });
+  useEffect(() => {
+    if (animals.length < 1) return;
+    localStorage.setItem("Animals", JSON.stringify(animals));
+  }, [animals]);
 
   const feedAnimal = (a: IAnimal) => {
-    //local storage
+
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
 
-    for (let j = 0; j < sameItem.length; j++) {
-      if (sameItem[j].id === a.id) {
-        sameItem[j].isFed = true;
-        sameItem[j].lastFed = new Date().toLocaleTimeString();
-        setAnimal(sameItem[j]);
+    for (let i = 0; i < sameItem.length; i++) {
+      if (sameItem[i].id === a.id) {
+
+        a.isFed = true;
+        a.lastFed = new Date().toString();
+        setAnimal(a);
         const newAnimalList = [...animals];
-        newAnimalList.splice(j, 1, sameItem[j]);
-        localStorage.setItem("Animals", JSON.stringify(newAnimalList));
+        newAnimalList.splice(i, 1, a);
+        saveToLocalStorage(newAnimalList);
         setAnimals(newAnimalList);
       }
     }
@@ -65,7 +71,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home animals={animals} />} />
-          <Route path="/animal/:id" element={<Animal feedAnimal={feedAnimal} animal={animal} />} />
+          <Route path="/animal/:id" element={<Animal feedAnimal={feedAnimal} animals={animals} />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

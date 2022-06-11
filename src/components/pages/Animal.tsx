@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { IAnimal } from '../../models/IAnimal';
 import { StyledButton } from '../styled-components/Buttons/StyledButtons';
-import { StyledHeading } from '../styled-components/Headings/StyledHeadings';
+import { SmallHeading } from '../styled-components/Headings/StyledHeadings';
+import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
 import { SingleImageWrapper, SinglePageWrapperLg, SinglePageWrapperSm } from '../styled-components/Wrappers/StyledWrappers';
 
 interface IAnimalProps {
-    animal: IAnimal;
+    animals: IAnimal[];
     feedAnimal: (a: IAnimal) => void;
 }
+
+window.scrollTo(0, 0)
 
 export default function Animal(props: IAnimalProps) {
     const [specificAnimal, setSpecificAnimal] = useState<IAnimal>(
@@ -26,7 +29,6 @@ export default function Animal(props: IAnimalProps) {
         }
     );
     const [disabled, setDisabled] = useState(false);
-
     let params = useParams();
 
     const checkBgImage = (animal: IAnimal) => {
@@ -39,23 +41,29 @@ export default function Animal(props: IAnimalProps) {
         }
     }
 
-    useEffect(() => {
-        const storedAnimals = JSON.parse(localStorage.getItem("Animals") || "");
+    const date = new Date(specificAnimal.lastFed).toLocaleDateString() + " kl. " + new Date(specificAnimal.lastFed).toLocaleTimeString();
+    console.log(date)
 
-        for (let i = 0; i < storedAnimals.length; i++) {
-            if (storedAnimals[i].id.toString() === params.id) {
-                setSpecificAnimal(storedAnimals[i])
+    useEffect(() => {
+        if (params.id) {
+            for (let i = 0; i < props.animals.length; i++) {
+                if (props.animals[i].id === parseInt(params.id)) {
+                    setSpecificAnimal(props.animals[i]);
+                }
             }
         }
-    }, [props.animal])
+    }, []);
 
     useEffect(() => {
         if (specificAnimal.isFed === true) {
             setDisabled(true);
-            console.log(disabled)
+        }
+
+        let hoursSinceFed = Math.floor((new Date().getTime() - new Date(specificAnimal.lastFed).getTime()) / (1000 * 60 * 60));
+        if (hoursSinceFed > 4) {
+            setDisabled(false)
         }
     }, [specificAnimal.isFed])
-
 
     const feedAnimal = (a: IAnimal) => {
         props.feedAnimal(a)
@@ -64,22 +72,36 @@ export default function Animal(props: IAnimalProps) {
 
     return (
         <>
+            <StyledParagraph>
+                <Link to="/">Tillbaka till alla djur</Link>
+            </StyledParagraph>
             <SinglePageWrapperLg>
                 <SingleImageWrapper>
                     <img src={checkBgImage(specificAnimal)} alt={specificAnimal.name} />
                 </SingleImageWrapper>
                 <SinglePageWrapperSm>
-                    <StyledHeading padding="0px" fontsize="1.2rem">{specificAnimal.name}</StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Född: {specificAnimal.yearOfBirth}</StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Latin: {specificAnimal.latinName}</StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Mediciner: {specificAnimal.medicine} </StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Hungrig: {specificAnimal.isFed ? "Nej" : "Ja"} </StyledHeading>
-                    <StyledHeading padding="0px" fontsize="1rem">Åt senast: {specificAnimal.lastFed}</StyledHeading>
-                    <p>{specificAnimal.longDescription}</p>
+                    <SmallHeading fontsize="1.8rem">{specificAnimal.name}</SmallHeading>
+
+                    <StyledParagraph padding="0px" fontsize="1.1rem" align="left">
+                        Just nu är {specificAnimal.name}  {specificAnimal.isFed ? "mätt och belåten" : "hungrig"}.
+
+                    </StyledParagraph>
+                    <StyledParagraph padding="0px" fontsize="1.1rem" align="left">
+                        {specificAnimal.isFed ? specificAnimal.name + " åt senast: " + date : ""}
+                    </StyledParagraph>
                     <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
-                        disabled={disabled}
-                    > {specificAnimal.isFed ? "Djuret är matat" : "Mata djur"}
-                    </StyledButton>
+                        disabled={disabled}>
+                        {specificAnimal.isFed ? specificAnimal.name + " är redan matad" : "Mata " + specificAnimal.name}</StyledButton>
+                    <SmallHeading fontsize="1.2rem" padding="10px 0px 0px">Mer om {specificAnimal.name}</SmallHeading>
+                    <StyledParagraph align="left" padding="0px">
+                        <span>Född: {specificAnimal.yearOfBirth}</span>
+                        <span>Mediciner: {specificAnimal.medicine} </span>
+                        <span>Latinskt namn: {specificAnimal.latinName}</span>
+                    </StyledParagraph>
+                    <StyledParagraph align="left" padding="0px">
+                        {specificAnimal.longDescription}
+                    </StyledParagraph>
+
                 </SinglePageWrapperSm>
             </SinglePageWrapperLg>
         </>
