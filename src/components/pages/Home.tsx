@@ -10,11 +10,13 @@ interface IHomeProps {
 }
 
 export default function Home(props: IHomeProps) {
+    const checkIfAllAreFed = props.animals.every(animal => animal.isFed);
+    const numOfHungryAnimals = props.animals.filter((animal) => animal.isFed === false);
 
     return (
         <>
-            <StyledParagraph fontsize="1.5rem" padding="10px 0px" querydirection="row" querydisplay="flex" queryjustify="center" querypadding="30px 0px">
-                Hjälp oss att mata djuren som är hungriga.
+            <StyledParagraph bgcolor="#d4e3cd" fontsize="1.1rem" padding="10px 0px" querydirection="row" querydisplay="flex" queryjustify="center" querypadding="15px 0px">
+                {checkIfAllAreFed ? "Alla djuren är matade" : "Just nu är " + numOfHungryAnimals.length + " djur hungriga! Du får gärna gå in och mata dem."}
                 <FoodIcon />
             </StyledParagraph>
             <LandingPageWrapperLg>

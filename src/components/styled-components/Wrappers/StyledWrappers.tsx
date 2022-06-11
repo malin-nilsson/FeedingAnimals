@@ -24,7 +24,7 @@ justify-content: center;
 align-items: center;
 gap: 10px;
 width: ${(props: IWrapperProps) => props.width || "95%"};
-margin: 0 auto;
+margin: 20px auto;
 
 
 @media (min-width: 768px) {
@@ -32,7 +32,8 @@ margin: 0 auto;
   align-items: flex-start;
   justify-content: center;
   gap: 20px;
-
+  margin: 0 auto;
+  padding: 50px 0px;
   }
 
 a {
@@ -64,7 +65,11 @@ export const LandingPageWrapperSm = styled(LandingPageWrapperLg)`
   justify-content: ${(props: IWrapperProps) => props.justify || "flex-start"};
   padding: 0px 0px 20px;
   margin: 13px 0px;
-  min-height: 450px;
+  min-height: 510px;
+
+  &:hover {
+    opacity: 0.9;
+  }
   }
 `
 
@@ -102,6 +107,7 @@ background-size: cover;
 background-repeat: no-repeat;
 height: 280px;
 width: 100%;
+box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
 @media (min-width: 768px) {
   height: 350px;

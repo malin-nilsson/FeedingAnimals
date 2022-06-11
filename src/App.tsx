@@ -48,14 +48,28 @@ function App() {
     localStorage.setItem("Animals", JSON.stringify(animals));
   }, [animals]);
 
-  const feedAnimal = (a: IAnimal) => {
+  useEffect(() => {
+    const newAnimalList = [...animals];
 
+    for (let i = 0; i < newAnimalList.length; i++) {
+      let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
+
+      if (hoursSinceFed >= 1) {
+        newAnimalList[i].isFed = false;
+        setAnimal(newAnimalList[i]);
+        newAnimalList.splice(i, 1, newAnimalList[i]);
+        saveToLocalStorage(newAnimalList);
+        setAnimals(newAnimalList);
+      }
+    }
+  }, [])
+
+  const feedAnimal = (a: IAnimal) => {
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
 
     for (let i = 0; i < sameItem.length; i++) {
       if (sameItem[i].id === a.id) {
-
-        a.isFed = true;
+        a.isFed = !a.isFed;
         a.lastFed = new Date().toString();
         setAnimal(a);
         const newAnimalList = [...animals];

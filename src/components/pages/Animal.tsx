@@ -70,10 +70,10 @@ export default function Animal(props: IAnimalProps) {
         if (specificAnimal.isFed === true) {
             setDisabled(true);
         }
-
         let hoursSinceFed = Math.floor((new Date().getTime() - new Date(specificAnimal.lastFed).getTime()) / (1000 * 60 * 60));
-        if (hoursSinceFed > 4) {
+        if (hoursSinceFed >= 1) {
             setDisabled(false)
+            props.feedAnimal(specificAnimal)
         }
     }, [specificAnimal.isFed])
 
@@ -81,6 +81,8 @@ export default function Animal(props: IAnimalProps) {
         props.feedAnimal(a)
         setDisabled(true);
     };
+
+
 
     return (
         <>
@@ -110,7 +112,7 @@ export default function Animal(props: IAnimalProps) {
                     </StyledParagraph>
                     <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
                         disabled={disabled}>
-                        {specificAnimal.isFed ? specificAnimal.name + " är redan matad" : "Mata " + specificAnimal.name}</StyledButton>
+                        {specificAnimal.isFed ? specificAnimal.name + " har ätit" : "Mata " + specificAnimal.name}</StyledButton>
                     <SmallHeading fontsize="1.2rem" padding="10px 0px 0px">Mer om {specificAnimal.name}</SmallHeading>
                     <StyledParagraph align="left" padding="0px" querydirection="column">
                         <span>Född: {specificAnimal.yearOfBirth}</span>
