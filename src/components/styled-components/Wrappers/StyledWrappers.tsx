@@ -169,5 +169,16 @@ width: 100%;
   }
 `;
 
+export const NotFoundWrapper = styled.div`
+width: 100%;
+display: flex;
+flex-direction:column;
+justify-content: center;
+align-items: center;
+gap: 10px;
+font-size: 1.4rem;
+margin: 70px auto;
+`;
+
 
 

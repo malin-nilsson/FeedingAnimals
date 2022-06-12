@@ -58,8 +58,8 @@ function App() {
         newAnimalList[i].isFed = false;
         setAnimal(newAnimalList[i]);
         newAnimalList.splice(i, 1, newAnimalList[i]);
-        saveToLocalStorage(newAnimalList);
         setAnimals(newAnimalList);
+        saveToLocalStorage(newAnimalList);
       }
     }
   }, [])
