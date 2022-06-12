@@ -12,6 +12,7 @@ interface IParagraphProps {
   querydirection?: string,
   querypadding?: string,
   queryjustify?: string,
+  queryalign?: string,
   bgcolor?: string,
 }
 
@@ -34,6 +35,7 @@ background-color: ${(props: IParagraphProps) => props.bgcolor || ""};
   display: ${(props: IParagraphProps) => props.querydisplay || "flex"};
   flex-direction: ${(props: IParagraphProps) => props.querydirection || "column"};
   justify-content: ${(props: IParagraphProps) => props.queryjustify || "flex-start"};
+  text-align: ${(props: IParagraphProps) => props.queryalign || "left"};
   }
 
 span {

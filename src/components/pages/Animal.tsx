@@ -5,11 +5,13 @@ import HungryIcon from '../HungryIcon';
 import NotHungryIcon from '../NotHungryIcon';
 import { StyledButton } from '../styled-components/Buttons/StyledButtons';
 import { SmallHeading } from '../styled-components/Headings/StyledHeadings';
+import { StyledLoader } from '../styled-components/Loader/StyledLoader';
 import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
 import { SingleImageWrapper, SinglePageWrapperLg, SinglePageWrapperSm } from '../styled-components/Wrappers/StyledWrappers';
 
 interface IAnimalProps {
     animals: IAnimal[];
+    loader: boolean;
     feedAnimal: (a: IAnimal) => void;
 }
 
@@ -43,6 +45,16 @@ export default function Animal(props: IAnimalProps) {
         }
     }
 
+    const loaderHTML = (
+        <>
+            <StyledLoader>
+            </StyledLoader>
+            <StyledParagraph querypadding="8px" queryalign="center" fontsize="1.6rem">
+                Loading...
+            </StyledParagraph>
+        </>
+    )
+
     const date = new Date(specificAnimal.lastFed).toLocaleDateString() + " kl. " + new Date(specificAnimal.lastFed).toLocaleTimeString();
     console.log(date)
 
@@ -55,11 +67,8 @@ export default function Animal(props: IAnimalProps) {
             }
         } else {
             const animalStorage = JSON.parse(localStorage.getItem("Animals") || "[]");
-
             for (let i = 0; i < animalStorage.length; i++) {
-
                 if (animalStorage[i].id.toString() === params.id) {
-
                     setSpecificAnimal(animalStorage[i]);
                 }
             }
@@ -70,6 +79,7 @@ export default function Animal(props: IAnimalProps) {
         if (specificAnimal.isFed === true) {
             setDisabled(true);
         }
+
         let hoursSinceFed = Math.floor((new Date().getTime() - new Date(specificAnimal.lastFed).getTime()) / (1000 * 60 * 60));
         if (hoursSinceFed >= 1) {
             setDisabled(false)
@@ -86,45 +96,48 @@ export default function Animal(props: IAnimalProps) {
 
     return (
         <>
-            <StyledParagraph padding="10px 0px" querypadding="20px 0px" queryjustify="center">
+            <StyledParagraph padding="10px 0px" querypadding="20px 0px" queryjustify="center" queryalign="center">
                 <Link to="/">Tillbaka till alla djur</Link>
             </StyledParagraph>
-            <SinglePageWrapperLg>
-                <SingleImageWrapper>
-                    <img src={checkBgImage(specificAnimal)} alt={specificAnimal.name} />
-                </SingleImageWrapper>
-                <SinglePageWrapperSm>
-                    <SmallHeading fontsize="1.8rem">{specificAnimal.name}</SmallHeading>
 
-                    {specificAnimal.isFed ? <StyledParagraph querydirection="row" justify="center" queryjustify="flex-start" padding="0px" fontsize="1.1rem" align="center">
-                        Just nu är {specificAnimal.name} mätt
-                        <NotHungryIcon />
-                    </StyledParagraph> :
+            {props.loader ? loaderHTML :
+                <SinglePageWrapperLg>
+                    <SingleImageWrapper>
+                        <img src={checkBgImage(specificAnimal)} alt={specificAnimal.name} />
+                    </SingleImageWrapper>
+                    <SinglePageWrapperSm>
+                        <SmallHeading fontsize="1.8rem">{specificAnimal.name}</SmallHeading>
 
-                        <StyledParagraph querydirection="row" padding="0px" justify="center" queryjustify="flex-start" fontsize="1.1rem" align="center">
-                            Just nu är {specificAnimal.name} hungrig
-                            <HungryIcon />
+                        {specificAnimal.isFed ? <StyledParagraph querydirection="row" justify="center" queryjustify="flex-start" padding="0px" fontsize="1.1rem" align="center">
+                            Just nu är {specificAnimal.name} mätt
+                            <NotHungryIcon />
+                        </StyledParagraph> :
+
+                            <StyledParagraph querydirection="row" padding="0px" justify="center" queryjustify="flex-start" fontsize="1.1rem" align="center">
+                                Just nu är {specificAnimal.name} hungrig
+                                <HungryIcon />
+                            </StyledParagraph>
+                        }
+
+                        <StyledParagraph padding="0px" fontsize="1.1rem" align="center" queryalign="left">
+                            {specificAnimal.isFed && specificAnimal.name + " åt senast: " + date}
                         </StyledParagraph>
-                    }
+                        <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
+                            disabled={disabled}>
+                            {specificAnimal.isFed ? specificAnimal.name + " har ätit" : "Mata " + specificAnimal.name}</StyledButton>
+                        <SmallHeading fontsize="1.2rem" padding="10px 0px 0px">Mer om {specificAnimal.name}</SmallHeading>
+                        <StyledParagraph align="left" padding="0px" querydirection="column" queryalign="left">
+                            <span>Född: {specificAnimal.yearOfBirth}</span>
+                            <span>Mediciner: {specificAnimal.medicine} </span>
+                            <span>Latinskt namn: {specificAnimal.latinName}</span>
+                        </StyledParagraph>
+                        <StyledParagraph align="left" padding="0px">
+                            {specificAnimal.longDescription}
+                        </StyledParagraph>
 
-                    <StyledParagraph padding="0px" fontsize="1.1rem" align="left">
-                        {specificAnimal.isFed && specificAnimal.name + " åt senast: " + date}
-                    </StyledParagraph>
-                    <StyledButton onClick={(() => { feedAnimal(specificAnimal) })}
-                        disabled={disabled}>
-                        {specificAnimal.isFed ? specificAnimal.name + " har ätit" : "Mata " + specificAnimal.name}</StyledButton>
-                    <SmallHeading fontsize="1.2rem" padding="10px 0px 0px">Mer om {specificAnimal.name}</SmallHeading>
-                    <StyledParagraph align="left" padding="0px" querydirection="column">
-                        <span>Född: {specificAnimal.yearOfBirth}</span>
-                        <span>Mediciner: {specificAnimal.medicine} </span>
-                        <span>Latinskt namn: {specificAnimal.latinName}</span>
-                    </StyledParagraph>
-                    <StyledParagraph align="left" padding="0px">
-                        {specificAnimal.longDescription}
-                    </StyledParagraph>
+                    </SinglePageWrapperSm>
+                </SinglePageWrapperLg>}
 
-                </SinglePageWrapperSm>
-            </SinglePageWrapperLg>
         </>
     )
 }

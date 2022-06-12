@@ -7,6 +7,7 @@ import Animal from './components/pages/Animal';
 import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
+import { StyledLoader } from './components/styled-components/Loader/StyledLoader';
 
 function App() {
   const [animals, setAnimals] = useState<IAnimal[]>([]);
@@ -24,45 +25,35 @@ function App() {
       yearOfBirth: 0,
     }
   );
+  const [loader, setLoader] = useState(true);
 
   const saveToLocalStorage = (animalList: IAnimal[]) => {
     localStorage.setItem("Animals", JSON.stringify(animalList));
   };
 
   useEffect(() => {
+    if (animals.length !== 0) return;
+
     const animalStorage = localStorage.getItem("Animals");
     if (animalStorage) {
       setAnimals(JSON.parse(animalStorage));
+      setLoader(false);
     } else if (!animalStorage) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
         .then((response) => {
           setAnimals(response.data);
           saveToLocalStorage(response.data);
+          setLoader(false);
         });
     }
-  }, []);
+  }, [animals.length]);
 
   useEffect(() => {
     if (animals.length < 1) return;
     localStorage.setItem("Animals", JSON.stringify(animals));
   }, [animals]);
 
-  useEffect(() => {
-    const newAnimalList = [...animals];
-
-    for (let i = 0; i < newAnimalList.length; i++) {
-      let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
-
-      if (hoursSinceFed >= 1) {
-        newAnimalList[i].isFed = false;
-        setAnimal(newAnimalList[i]);
-        newAnimalList.splice(i, 1, newAnimalList[i]);
-        setAnimals(newAnimalList);
-        saveToLocalStorage(newAnimalList);
-      }
-    }
-  }, [])
 
   const feedAnimal = (a: IAnimal) => {
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
@@ -74,8 +65,8 @@ function App() {
         setAnimal(a);
         const newAnimalList = [...animals];
         newAnimalList.splice(i, 1, a);
-        saveToLocalStorage(newAnimalList);
         setAnimals(newAnimalList);
+        saveToLocalStorage(newAnimalList);
       }
     }
   }
@@ -84,8 +75,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home animals={animals} />} />
-          <Route path="/animal/:id" element={<Animal feedAnimal={feedAnimal} animals={animals} />} />
+          <Route index element={<Home animals={animals} loader={loader} />} />
+          <Route path="/animal/:id" element={<Animal feedAnimal={feedAnimal} animals={animals} loader={loader} />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
