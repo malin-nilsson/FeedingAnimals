@@ -7,7 +7,6 @@ import Animal from './components/pages/Animal';
 import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
-import { StyledLoader } from './components/styled-components/Loader/StyledLoader';
 
 function App() {
   const [animals, setAnimals] = useState<IAnimal[]>([]);
@@ -34,11 +33,11 @@ function App() {
   useEffect(() => {
     if (animals.length !== 0) return;
 
-    const animalStorage = localStorage.getItem("Animals");
-    if (animalStorage) {
-      setAnimals(JSON.parse(animalStorage));
-      setLoader(false);
-    } else if (!animalStorage) {
+    const animalStorage = localStorage.getItem("Animals") || "[]";
+    setAnimals(JSON.parse(animalStorage));
+    setLoader(false);
+
+    if (animalStorage.length === 0) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
         .then((response) => {
@@ -47,17 +46,30 @@ function App() {
           setLoader(false);
         });
     }
-  }, [animals.length]);
+  });
 
   useEffect(() => {
     if (animals.length < 1) return;
-    localStorage.setItem("Animals", JSON.stringify(animals));
+
+    const newAnimalList = [...animals];
+
+    for (let i = 0; i < newAnimalList.length; i++) {
+      let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
+
+      if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
+        console.log(newAnimalList[i])
+        newAnimalList[i].isFed = false;
+        newAnimalList[i].lastFed = new Date().toString();
+        setAnimal(newAnimalList[i])
+        newAnimalList.splice(i, 1, newAnimalList[i]);
+        saveToLocalStorage(newAnimalList);
+      }
+    }
   }, [animals]);
 
 
   const feedAnimal = (a: IAnimal) => {
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
-
     for (let i = 0; i < sameItem.length; i++) {
       if (sameItem[i].id === a.id) {
         a.isFed = !a.isFed;

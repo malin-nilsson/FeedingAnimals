@@ -92,8 +92,6 @@ export default function Animal(props: IAnimalProps) {
         setDisabled(true);
     };
 
-
-
     return (
         <>
             <StyledParagraph padding="10px 0px" querypadding="20px 0px" queryjustify="center" queryalign="center">
@@ -134,10 +132,8 @@ export default function Animal(props: IAnimalProps) {
                         <StyledParagraph align="left" padding="0px">
                             {specificAnimal.longDescription}
                         </StyledParagraph>
-
                     </SinglePageWrapperSm>
                 </SinglePageWrapperLg>}
-
         </>
     )
 }

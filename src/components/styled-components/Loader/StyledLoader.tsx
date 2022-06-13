@@ -10,10 +10,10 @@ const loader = keyframes`
 `;
 
 export const StyledLoader = styled.span`
-font-size: 1.4rem;
-width: 60px;
+    font-size: 1.4rem;
+    width: 60px;
     height: 60px;
-    border: 5px solid #000;
+    border: 8px solid #1F5F5B;
     border-bottom-color: transparent;
     border-radius: 50%;
     margin: 60px auto 0px;
