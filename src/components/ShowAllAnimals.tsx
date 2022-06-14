@@ -34,14 +34,24 @@ export default function ShowAllAnimals(props: IAllAnimals) {
                             backgroundpos={animal.id === 12 ? "center" : "top"}>
                         </GridImageWrapper>
                         <TextWrapper>
-                            {animal.isFed ? <StyledParagraph align="left" direction="row" querydirection="row">
-                                <NotHungryIcon />
-                                Jag är mätt!</StyledParagraph> :
-                                <StyledParagraph align="left" direction="row" querydirection="row">
+                            {animal.isFed ?
+                                <StyledParagraph
+                                    align="left"
+                                    direction="row"
+                                    querydirection="row">
+                                    <NotHungryIcon />
+                                    Jag är mätt!</StyledParagraph> :
+                                <StyledParagraph
+                                    align="left"
+                                    direction="row"
+                                    querydirection="row">
                                     <HungryIcon />
                                     Jag är hungrig!</StyledParagraph>}
-                            <SmallHeading fontsize="1.5rem" padding="10px 0px">{animal.name}</SmallHeading>
-                            <StyledParagraph fontsize="0.9rem">{animal.shortDescription}</StyledParagraph>
+                            <SmallHeading
+                                fontsize="1.5rem"
+                                padding="10px 0px">{animal.name}</SmallHeading>
+                            <StyledParagraph
+                                fontsize="0.9rem">{animal.shortDescription}</StyledParagraph>
                         </TextWrapper>
                     </LandingPageWrapperSm>
                 </Link>

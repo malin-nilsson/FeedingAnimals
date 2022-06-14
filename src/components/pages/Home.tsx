@@ -19,7 +19,10 @@ export default function Home(props: IHomeProps) {
         <>
             <StyledLoader>
             </StyledLoader>
-            <StyledParagraph querypadding="8px" queryalign="center" fontsize="1.6rem">
+            <StyledParagraph
+                querypadding="8px"
+                queryalign="center"
+                fontsize="1.6rem">
                 Loading...
             </StyledParagraph>
         </>

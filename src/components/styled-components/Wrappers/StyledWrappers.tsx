@@ -48,8 +48,6 @@ a {
   @media (min-width: 1100px) {
     width: 30%;
   }
-
-  
 }
 `
 

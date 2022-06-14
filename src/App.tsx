@@ -56,8 +56,9 @@ function App() {
     for (let i = 0; i < newAnimalList.length; i++) {
       let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
 
+      /* If there's been 4 hours since animal was fed,
+      enable feed button and set isFed to false */
       if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
-        console.log(newAnimalList[i])
         newAnimalList[i].isFed = false;
         newAnimalList[i].lastFed = new Date().toString();
         setAnimal(newAnimalList[i])
@@ -67,7 +68,7 @@ function App() {
     }
   }, [animals]);
 
-
+  // Toggle isFed, set lastFed to current date and update local storage
   const feedAnimal = (a: IAnimal) => {
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
     for (let i = 0; i < sameItem.length; i++) {
