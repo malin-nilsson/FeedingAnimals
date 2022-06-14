@@ -10,13 +10,9 @@ import { StyledLoader } from '../styled-components/Loader/StyledLoader';
 import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
 import { SingleImageWrapper, SinglePageWrapperLg, SinglePageWrapperSm } from '../styled-components/Wrappers/StyledWrappers';
 
-interface IAnimalProps {
-    loader: boolean;
-}
-
 window.scrollTo(0, 0)
 
-export default function Animal(props: IAnimalProps) {
+export default function Animal() {
     let animals = useContext(AnimalContext);
     const [specificAnimal, setSpecificAnimal] = useState<IAnimal>(
         {
@@ -61,7 +57,6 @@ export default function Animal(props: IAnimalProps) {
     )
 
     const date = new Date(specificAnimal.lastFed).toLocaleDateString() + " kl. " + new Date(specificAnimal.lastFed).toLocaleTimeString();
-    console.log(date)
 
     useEffect(() => {
         // If user lands on animal page directly from landing page
@@ -114,7 +109,7 @@ export default function Animal(props: IAnimalProps) {
                 <Link to="/">Tillbaka till alla djur</Link>
             </StyledParagraph>
 
-            {props.loader ? loaderHTML :
+            {animals.loader ? loaderHTML :
                 <SinglePageWrapperLg>
                     <SingleImageWrapper>
                         <img

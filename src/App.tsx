@@ -25,7 +25,6 @@ function App() {
       yearOfBirth: 0,
     }
   );
-  const [loader, setLoader] = useState(true);
 
   const saveToLocalStorage = (animalList: IAnimal[]) => {
     localStorage.setItem("Animals", JSON.stringify(animalList));
@@ -35,16 +34,14 @@ function App() {
     if (animals.animals.length !== 0) return;
 
     const animalStorage = localStorage.getItem("Animals") || "[]";
-    setAnimals({ ...animals, animals: JSON.parse(animalStorage) });
-    setLoader(false);
-
+    setAnimals({ ...animals, loader: false, animals: JSON.parse(animalStorage) });
+    
     if (animalStorage.length === 0) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
         .then((response) => {
-          setAnimals({ ...animals, animals: response.data });
+          setAnimals({ ...animals, loader: false, animals: response.data });
           saveToLocalStorage(response.data);
-          setLoader(false);
         });
     }
   });
@@ -90,8 +87,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home loader={loader} />} />
-            <Route path="/animal/:id" element={<Animal loader={loader} />} />
+            <Route index element={<Home />} />
+            <Route path="/animal/:id" element={<Animal />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

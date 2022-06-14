@@ -9,14 +9,8 @@ import HungryIcon from './HungryIcon';
 import { AnimalContext } from '../contexts/AnimalContext';
 import { StyledLoader } from './styled-components/Loader/StyledLoader';
 
-interface IShowAllProps {
-    loader: boolean;
-}
-
-export default function ShowAllAnimals(props: IShowAllProps) {
+export default function ShowAllAnimals() {
     let animals = useContext(AnimalContext);
-
-
 
     const checkBgImage = (animal: IAnimal) => {
         if (animal.id === 1) {
@@ -43,7 +37,7 @@ export default function ShowAllAnimals(props: IShowAllProps) {
 
     return (
         <>
-            {props.loader ? loaderHTML :
+            {animals.loader ? loaderHTML :
                 animals.animals.map((animal: IAnimal) => {
                     return (<Link to={"/animal/" + animal.id} key={animal.id}
                         className="card">

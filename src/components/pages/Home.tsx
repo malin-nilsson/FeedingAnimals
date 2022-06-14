@@ -7,11 +7,7 @@ import { StyledLoader } from '../styled-components/Loader/StyledLoader';
 import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
 import { LandingPageWrapperLg } from '../styled-components/Wrappers/StyledWrappers';
 
-interface IHomeProps {
-    loader: boolean;
-}
-
-export default function Home(props: IHomeProps) {
+export default function Home() {
     const animals = useContext(AnimalContext);
     const [allFed, setAllFed] = useState(false);
     const [hungryAnimals, setHungryAnimals] = useState<IAnimal[]>([]);
@@ -41,7 +37,7 @@ export default function Home(props: IHomeProps) {
                 <FoodIcon />
             </StyledParagraph>
             <LandingPageWrapperLg>
-                <ShowAllAnimals loader={props.loader} />
+                <ShowAllAnimals />
             </LandingPageWrapperLg>
         </>
     )
