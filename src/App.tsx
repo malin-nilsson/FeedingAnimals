@@ -7,9 +7,10 @@ import Animal from './components/pages/Animal';
 import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
+import { AnimalContext, AnimalInterface, defaultValue } from './contexts/AnimalContext';
 
 function App() {
-  const [animals, setAnimals] = useState<IAnimal[]>([]);
+  const [animals, setAnimals] = useState<AnimalInterface>(defaultValue);
   const [animal, setAnimal] = useState<IAnimal>(
     {
       id: 0,
@@ -31,17 +32,17 @@ function App() {
   };
 
   useEffect(() => {
-    if (animals.length !== 0) return;
+    if (animals.animals.length !== 0) return;
 
     const animalStorage = localStorage.getItem("Animals") || "[]";
-    setAnimals(JSON.parse(animalStorage));
+    setAnimals({ ...animals, animals: JSON.parse(animalStorage) });
     setLoader(false);
 
     if (animalStorage.length === 0) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
         .then((response) => {
-          setAnimals(response.data);
+          setAnimals({ ...animals, animals: response.data });
           saveToLocalStorage(response.data);
           setLoader(false);
         });
@@ -49,15 +50,15 @@ function App() {
   });
 
   useEffect(() => {
-    if (animals.length < 1) return;
+    if (animals.animals.length < 1) return;
 
-    const newAnimalList = [...animals];
+    const newAnimalList = [...animals.animals];
 
     for (let i = 0; i < newAnimalList.length; i++) {
       let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
 
       /* If there's been 4 hours since animal was fed,
-      enable feed button and set isFed to false */
+      enable feed button so you can feed animal again */
       if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
         newAnimalList[i].isFed = false;
         newAnimalList[i].lastFed = new Date().toString();
@@ -69,31 +70,33 @@ function App() {
   }, [animals]);
 
   // Toggle isFed, set lastFed to current date and update local storage
-  const feedAnimal = (a: IAnimal) => {
+  animals.feedAnimal = (a: IAnimal) => {
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
     for (let i = 0; i < sameItem.length; i++) {
       if (sameItem[i].id === a.id) {
         a.isFed = !a.isFed;
         a.lastFed = new Date().toString();
         setAnimal(a);
-        const newAnimalList = [...animals];
+        const newAnimalList = [...animals.animals];
         newAnimalList.splice(i, 1, a);
-        setAnimals(newAnimalList);
+        setAnimals({ ...animals, animals: newAnimalList });
         saveToLocalStorage(newAnimalList);
       }
     }
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home animals={animals} loader={loader} />} />
-          <Route path="/animal/:id" element={<Animal feedAnimal={feedAnimal} animals={animals} loader={loader} />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AnimalContext.Provider value={animals}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home loader={loader} />} />
+            <Route path="/animal/:id" element={<Animal loader={loader} />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AnimalContext.Provider>
   );
 }
 

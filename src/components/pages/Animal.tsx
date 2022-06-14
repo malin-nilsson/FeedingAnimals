@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
+import { AnimalContext } from '../../contexts/AnimalContext';
 import { IAnimal } from '../../models/IAnimal';
 import HungryIcon from '../HungryIcon';
 import NotHungryIcon from '../NotHungryIcon';
@@ -10,14 +11,13 @@ import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraph
 import { SingleImageWrapper, SinglePageWrapperLg, SinglePageWrapperSm } from '../styled-components/Wrappers/StyledWrappers';
 
 interface IAnimalProps {
-    animals: IAnimal[];
     loader: boolean;
-    feedAnimal: (a: IAnimal) => void;
 }
 
 window.scrollTo(0, 0)
 
 export default function Animal(props: IAnimalProps) {
+    let animals = useContext(AnimalContext);
     const [specificAnimal, setSpecificAnimal] = useState<IAnimal>(
         {
             id: 0,
@@ -65,10 +65,10 @@ export default function Animal(props: IAnimalProps) {
 
     useEffect(() => {
         // If user lands on animal page directly from landing page
-        if (props.animals.length > 0) {
-            for (let i = 0; i < props.animals.length; i++) {
-                if (props.animals[i].id.toString() === params.id) {
-                    setSpecificAnimal(props.animals[i]);
+        if (animals.animals.length > 0) {
+            for (let i = 0; i < animals.animals.length; i++) {
+                if (animals.animals[i].id.toString() === params.id) {
+                    setSpecificAnimal(animals.animals[i]);
                 }
             }
             /* If user lands on /animal/:id directly,
@@ -94,13 +94,13 @@ export default function Animal(props: IAnimalProps) {
         let hoursSinceFed = Math.floor((new Date().getTime() - new Date(specificAnimal.lastFed).getTime()) / (1000 * 60 * 60));
         if (hoursSinceFed >= 1) {
             setDisabled(false)
-            props.feedAnimal(specificAnimal)
+            animals.feedAnimal(specificAnimal)
         }
     }, [specificAnimal.isFed])
 
     // Feed animal and disable feed button
     const feedAnimal = (a: IAnimal) => {
-        props.feedAnimal(a)
+        animals.feedAnimal(a)
         setDisabled(true);
     };
 
