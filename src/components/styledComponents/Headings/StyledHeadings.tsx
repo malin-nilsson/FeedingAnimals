@@ -4,6 +4,7 @@ interface IHeadingsProps {
     fontsize?: string,
     padding?: string,
     align?: string,
+    margin?: string
 }
 
 export const BigHeading = styled.h1`
@@ -20,4 +21,5 @@ text-align:  ${(props: IHeadingsProps) => props.align || "center"};
 padding: ${(props: IHeadingsProps) => props.padding || "5px 0px"};
 font-family: 'Abril Fatface', cursive;
 margin: 0;
+
 `

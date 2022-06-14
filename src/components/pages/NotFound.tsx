@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { NotFoundWrapper } from '../styled-components/Wrappers/StyledWrappers'
+import { NotFoundWrapper } from '../styledComponents/Wrappers/StyledWrappers'
 
 export default function NotFound() {
     return (

@@ -3,9 +3,8 @@ import { AnimalContext } from '../../contexts/AnimalContext';
 import { IAnimal } from '../../models/IAnimal';
 import FoodIcon from '../FoodIcon';
 import ShowAllAnimals from '../ShowAllAnimals';
-import { StyledLoader } from '../styled-components/Loader/StyledLoader';
-import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
-import { LandingPageWrapperLg } from '../styled-components/Wrappers/StyledWrappers';
+import { StyledParagraph } from '../styledComponents/Text/StyledParagraphs';
+import { LandingPageWrapperLg } from '../styledComponents/Wrappers/StyledWrappers';
 
 export default function Home() {
     const animals = useContext(AnimalContext);
@@ -21,8 +20,6 @@ export default function Home() {
 
     }, [animals.animals])
 
-
-
     return (
         <>
             <StyledParagraph
@@ -33,7 +30,8 @@ export default function Home() {
                 querydisplay="flex"
                 queryjustify="center"
                 querypadding="15px 0px">
-                {allFed ? "Alla djuren är matade" : "Just nu är " + hungryAnimals.length + " djur hungriga! Gå gärna in och mata dem."}
+                {allFed ? "Alla djuren är matade" :
+                    "Just nu är " + hungryAnimals.length + " djur hungriga! Gå gärna in och mata dem"}
                 <FoodIcon />
             </StyledParagraph>
             <LandingPageWrapperLg>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router'
 import GlobalStyle from '../GlobalStyles'
 import Navbar from '../Navbar'
-import { LayoutWrapper } from '../styled-components/Wrappers/StyledWrappers'
+import { LayoutWrapper } from '../styledComponents/Wrappers/StyledWrappers'
 
 export default function Layout() {
     return (

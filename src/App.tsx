@@ -35,7 +35,7 @@ function App() {
 
     const animalStorage = localStorage.getItem("Animals") || "[]";
     setAnimals({ ...animals, loader: false, animals: JSON.parse(animalStorage) });
-    
+
     if (animalStorage.length === 0) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
@@ -48,20 +48,20 @@ function App() {
 
   useEffect(() => {
     if (animals.animals.length < 1) return;
-
     const newAnimalList = [...animals.animals];
 
     for (let i = 0; i < newAnimalList.length; i++) {
       let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
 
       /* If there's been 4 hours since animal was fed,
-      enable feed button so you can feed animal again */
+      enable feed button so user can feed animal again */
       if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
         newAnimalList[i].isFed = false;
         newAnimalList[i].lastFed = new Date().toString();
         setAnimal(newAnimalList[i])
         newAnimalList.splice(i, 1, newAnimalList[i]);
         saveToLocalStorage(newAnimalList);
+        setAnimals({ ...animals, loader: false, animals: newAnimalList });
       }
     }
   }, [animals]);

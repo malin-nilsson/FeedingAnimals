@@ -8,6 +8,9 @@ interface IWrapperProps {
   backgroundpos?: string
 }
 
+////////////////////
+// Layout wrapper //
+////////////////////
 export const LayoutWrapper = styled.div`
 width: 100vw;
 height: 100vh;
@@ -37,7 +40,6 @@ margin: 20px auto;
   }
 
 a {
-  color: #000;
   text-decoration: none;
   width: 100%;
 
@@ -71,14 +73,6 @@ export const LandingPageWrapperSm = styled(LandingPageWrapperLg)`
   }
 `
 
-
-/////////////////////
-// Button wrappers //
-/////////////////////
-export const ButtonWrapper = styled(LandingPageWrapperLg)`
-width: 100%;
-`;
-
 /////////////////////
 // Text wrappers //
 /////////////////////
@@ -109,7 +103,7 @@ box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
 @media (min-width: 768px) {
   height: 350px;
-width: 100%;
+  width: 100%;
   }
 
 @media (min-width: 1100px) {
@@ -125,8 +119,6 @@ width: 100%;
   padding: 10px 0px;
   }
 `;
-
-
 
 //////////////////////////
 // Single page wrappers //

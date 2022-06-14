@@ -4,11 +4,11 @@ import { AnimalContext } from '../../contexts/AnimalContext';
 import { IAnimal } from '../../models/IAnimal';
 import HungryIcon from '../HungryIcon';
 import NotHungryIcon from '../NotHungryIcon';
-import { StyledButton } from '../styled-components/Buttons/StyledButtons';
-import { SmallHeading } from '../styled-components/Headings/StyledHeadings';
-import { StyledLoader } from '../styled-components/Loader/StyledLoader';
-import { StyledParagraph } from '../styled-components/Paragraphs/StyledParagraphs';
-import { SingleImageWrapper, SinglePageWrapperLg, SinglePageWrapperSm } from '../styled-components/Wrappers/StyledWrappers';
+import { StyledButton } from '../styledComponents/Buttons/StyledButtons';
+import { SmallHeading } from '../styledComponents/Headings/StyledHeadings';
+import { StyledLoader } from '../styledComponents/Loader/StyledLoader';
+import { StyledParagraph } from '../styledComponents/Text/StyledParagraphs';
+import { SingleImageWrapper, SinglePageWrapperLg, SinglePageWrapperSm } from '../styledComponents/Wrappers/StyledWrappers';
 
 window.scrollTo(0, 0)
 
@@ -76,7 +76,7 @@ export default function Animal() {
                 }
             }
         };
-    }, []);
+    });
 
     useEffect(() => {
         // If animal has been set, disable feed button
@@ -144,14 +144,26 @@ export default function Animal() {
                             </StyledParagraph>
                         }
 
-                        <StyledParagraph
-                            padding="0px"
-                            fontsize="1.1rem"
-                            align="center"
-                            queryalign="left">
-                            {specificAnimal.isFed && specificAnimal.name + " åt senast: " + date}
-                        </StyledParagraph>
-                        <StyledButton
+                        {specificAnimal.isFed && (
+                            <>
+                                <StyledParagraph
+                                    padding="0px"
+                                    fontsize="1.1rem"
+                                    align="center"
+                                    queryalign="left">
+                                    {specificAnimal.name} åt senast: {date}
+                                </StyledParagraph>
+                                <StyledParagraph
+                                    padding="0px"
+                                    fontsize="1.1rem"
+                                    align="center"
+                                    queryalign="left">
+                                    {specificAnimal.isFed && ("Djuren kan matas var fjärde timme.")}
+                                </StyledParagraph>
+                            </>
+                        )
+                        }
+                        < StyledButton
                             onClick={(() => { feedAnimal(specificAnimal) })}
                             disabled={disabled}>
                             {specificAnimal.isFed ? specificAnimal.name + " har ätit" : "Mata " + specificAnimal.name}</StyledButton>

@@ -13,7 +13,7 @@ interface IParagraphProps {
   querypadding?: string,
   queryjustify?: string,
   queryalign?: string,
-  bgcolor?: string,
+  bgcolor?: string
 }
 
 export const StyledParagraph = styled.p`
@@ -36,6 +36,7 @@ background-color: ${(props: IParagraphProps) => props.bgcolor || ""};
   flex-direction: ${(props: IParagraphProps) => props.querydirection || "column"};
   justify-content: ${(props: IParagraphProps) => props.queryjustify || "flex-start"};
   text-align: ${(props: IParagraphProps) => props.queryalign || "left"};
+
   }
 
 span {

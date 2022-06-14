@@ -19,9 +19,8 @@ const GlobalStyle = createGlobalStyle`
 
 a {
   color: #000;
+
 }
-
-
 
 `;
 
