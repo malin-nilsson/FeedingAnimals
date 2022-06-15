@@ -4,7 +4,7 @@ import { IAnimal } from '../../models/IAnimal';
 import FoodIcon from '../FoodIcon';
 import ShowAllAnimals from '../ShowAllAnimals';
 import { StyledParagraph } from '../styledComponents/Text/StyledParagraphs';
-import { LandingPageWrapperLg } from '../styledComponents/Wrappers/StyledWrappers';
+import { FlexWrapperLg } from '../styledComponents/Wrappers/StyledWrappers';
 
 export default function Home() {
     const animals = useContext(AnimalContext);
@@ -23,20 +23,20 @@ export default function Home() {
     return (
         <>
             <StyledParagraph
-                bgcolor="#d4e3cd"
-                fontsize="1.1rem"
+                bgColor="#d4e3cd"
+                fontSize="1.1rem"
                 padding="10px 0px"
-                querydirection="row"
-                querydisplay="flex"
-                queryjustify="center"
-                querypadding="15px 0px">
+                queryDirection="row"
+                queryDisplay="flex"
+                queryJustify="center"
+                queryPadding="15px 0px">
                 {allFed ? "Alla djuren är matade" :
                     "Just nu är " + hungryAnimals.length + " djur hungriga! Gå gärna in och mata dem"}
                 <FoodIcon />
             </StyledParagraph>
-            <LandingPageWrapperLg>
+            <FlexWrapperLg>
                 <ShowAllAnimals />
-            </LandingPageWrapperLg>
+            </FlexWrapperLg>
         </>
     )
 }

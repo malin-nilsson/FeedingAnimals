@@ -29,7 +29,9 @@ export default function Animal() {
         }
     );
     const [disabled, setDisabled] = useState(false);
-    let params = useParams();
+    const params = useParams();
+    const year = new Date().getFullYear();
+    const date = new Date(specificAnimal.lastFed).toLocaleDateString() + " kl. " + new Date(specificAnimal.lastFed).toLocaleTimeString();
 
     /* Set background image for animals 
     that are missing an image */
@@ -48,15 +50,13 @@ export default function Animal() {
             <StyledLoader>
             </StyledLoader>
             <StyledParagraph
-                querypadding="8px"
-                queryalign="center"
-                fontsize="1.6rem">
+                queryPadding="8px"
+                queryAlign="center"
+                fontSize="1.6rem">
                 Loading...
             </StyledParagraph>
         </>
     )
-
-    const date = new Date(specificAnimal.lastFed).toLocaleDateString() + " kl. " + new Date(specificAnimal.lastFed).toLocaleTimeString();
 
     useEffect(() => {
         // If user lands on animal page directly from landing page
@@ -103,9 +103,9 @@ export default function Animal() {
         <>
             <StyledParagraph
                 padding="10px 0px"
-                querypadding="20px 0px"
-                queryjustify="center"
-                queryalign="center">
+                queryPadding="20px 0px"
+                queryJustify="center"
+                queryAlign="center">
                 <Link to="/">Tillbaka till alla djur</Link>
             </StyledParagraph>
 
@@ -119,25 +119,27 @@ export default function Animal() {
 
                     <SinglePageWrapperSm>
                         <SmallHeading
-                            fontsize="1.8rem">{specificAnimal.name}
+                            fontSize="1.8rem">{specificAnimal.name}
                         </SmallHeading>
 
                         {specificAnimal.isFed ?
                             <StyledParagraph
-                                querydirection="row"
+                                queryDirection="row"
                                 justify="center"
-                                queryjustify="flex-start"
-                                padding="0px" fontsize="1.1rem"
+                                queryJustify="flex-start"
+                                padding="0px"
+                                fontSize="1.1rem"
                                 align="center">
                                 Just nu är {specificAnimal.name} mätt
                                 <NotHungryIcon />
                             </StyledParagraph> :
 
                             <StyledParagraph
-                                querydirection="row"
-                                padding="0px" justify="center"
-                                queryjustify="flex-start"
-                                fontsize="1.1rem"
+                                queryDirection="row"
+                                padding="0px"
+                                justify="center"
+                                queryJustify="flex-start"
+                                fontSize="1.1rem"
                                 align="center">
                                 Just nu är {specificAnimal.name} hungrig
                                 <HungryIcon />
@@ -148,16 +150,16 @@ export default function Animal() {
                             <>
                                 <StyledParagraph
                                     padding="0px"
-                                    fontsize="1.1rem"
+                                    fontSize="1.1rem"
                                     align="center"
-                                    queryalign="left">
+                                    queryAlign="left">
                                     {specificAnimal.name} åt senast: {date}
                                 </StyledParagraph>
                                 <StyledParagraph
                                     padding="0px"
-                                    fontsize="1.1rem"
+                                    fontSize="1.1rem"
                                     align="center"
-                                    queryalign="left">
+                                    queryAlign="left">
                                     {specificAnimal.isFed && ("Djuren kan matas var fjärde timme.")}
                                 </StyledParagraph>
                             </>
@@ -168,16 +170,16 @@ export default function Animal() {
                             disabled={disabled}>
                             {specificAnimal.isFed ? specificAnimal.name + " har ätit" : "Mata " + specificAnimal.name}</StyledButton>
                         <SmallHeading
-                            fontsize="1.2rem"
+                            fontSize="1.2rem"
                             padding="10px 0px 0px">
                             Mer om {specificAnimal.name}
                         </SmallHeading>
                         <StyledParagraph
                             align="left"
                             padding="0px"
-                            querydirection="column"
-                            queryalign="left">
-                            <span>Född: {specificAnimal.yearOfBirth}</span>
+                            queryDirection="column"
+                            queryAlign="left">
+                            <span>Ålder: {year - specificAnimal.yearOfBirth} år</span>
                             <span>Mediciner: {specificAnimal.medicine} </span>
                             <span>Latinskt namn: {specificAnimal.latinName}</span>
                         </StyledParagraph>

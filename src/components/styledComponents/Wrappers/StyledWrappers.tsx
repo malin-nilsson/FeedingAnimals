@@ -4,8 +4,8 @@ interface IWrapperProps {
   width?: string,
   justify?: string,
   align?: string,
-  backgroundimg?: string,
-  backgroundpos?: string
+  backgroundImg?: string,
+  backgroundPos?: string
 }
 
 ////////////////////
@@ -19,7 +19,7 @@ height: 100vh;
 ///////////////////////////
 // Landing page wrappers //
 ///////////////////////////
-export const LandingPageWrapperLg = styled.div`
+export const FlexWrapperLg = styled.div`
 display: flex;
 flex-direction: column;
 flex-wrap: wrap;
@@ -53,7 +53,7 @@ a {
 }
 `
 
-export const LandingPageWrapperSm = styled(LandingPageWrapperLg)`
+export const FlexWrapperSm = styled(FlexWrapperLg)`
   flex-direction: column;
   align-items: ${(props: IWrapperProps) => props.align || "flex-start"};
   justify-content: ${(props: IWrapperProps) => props.justify || "center"};
@@ -73,52 +73,6 @@ export const LandingPageWrapperSm = styled(LandingPageWrapperLg)`
   }
 `
 
-/////////////////////
-// Text wrappers //
-/////////////////////
-export const TextWrapper = styled.div`
-padding: 10px;
-
-@media (min-width: 768px) {
-  padding: 0px 20px;
-  }
-
-p {
-  padding: 2px 0px;
-  margin: 0;
-}
-`
-
-/////////////////////
-// Image wrappers //
-/////////////////////
-export const GridImageWrapper = styled.div`
-background-image: ${(props: IWrapperProps) => "url(" + props.backgroundimg + ")" || ""};
-background-position: ${(props: IWrapperProps) => props.backgroundpos || "top"};
-background-size: cover;
-background-repeat: no-repeat;
-height: 280px;
-width: 100%;
-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-@media (min-width: 768px) {
-  height: 350px;
-  width: 100%;
-  }
-
-@media (min-width: 1100px) {
-  width: 360px;
-  }
-`
-
-export const SingleImageWrapper = styled.div`
-width: 100%;
-
-@media (min-width: 768px) {
-  width: 50%;
-  padding: 10px 0px;
-  }
-`;
 
 //////////////////////////
 // Single page wrappers //
@@ -159,6 +113,56 @@ width: 100%;
   }
 `;
 
+/////////////////////
+// Text wrappers //
+/////////////////////
+export const TextWrapper = styled.div`
+padding: 10px;
+
+@media (min-width: 768px) {
+  padding: 0px 20px;
+  }
+
+p {
+  padding: 2px 0px;
+  margin: 0;
+}
+`
+
+/////////////////////
+// Image wrappers //
+/////////////////////
+export const GridImageWrapper = styled.div`
+background-image: ${(props: IWrapperProps) => "url(" + props.backgroundImg + ")" || ""};
+background-position: ${(props: IWrapperProps) => props.backgroundPos || "top"};
+background-size: cover;
+background-repeat: no-repeat;
+height: 280px;
+width: 100%;
+box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+@media (min-width: 768px) {
+  height: 350px;
+  width: 100%;
+  }
+
+@media (min-width: 1100px) {
+  width: 360px;
+  }
+`
+
+export const SingleImageWrapper = styled.div`
+width: 100%;
+
+@media (min-width: 768px) {
+  width: 50%;
+  padding: 10px 0px;
+  }
+`;
+
+////////////////////////////
+// Not found page wrapper //
+///////////////////////////
 export const NotFoundWrapper = styled.div`
 width: 100%;
 display: flex;

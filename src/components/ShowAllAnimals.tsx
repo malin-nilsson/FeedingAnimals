@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { IAnimal } from '../models/IAnimal';
-import { GridImageWrapper, LandingPageWrapperSm, TextWrapper } from './styledComponents/Wrappers/StyledWrappers';
+import { GridImageWrapper, FlexWrapperSm, TextWrapper } from './styledComponents/Wrappers/StyledWrappers';
 import { SmallHeading } from './styledComponents/Headings/StyledHeadings';
 import { Link } from 'react-router-dom';
 import { StyledParagraph } from './styledComponents/Text/StyledParagraphs';
@@ -27,9 +27,9 @@ export default function ShowAllAnimals() {
             <StyledLoader>
             </StyledLoader>
             <StyledParagraph
-                querypadding="8px"
-                queryalign="center"
-                fontsize="1.6rem">
+                queryPadding="8px"
+                queryAlign="center"
+                fontSize="1.6rem">
                 Loading...
             </StyledParagraph>
         </>
@@ -41,32 +41,32 @@ export default function ShowAllAnimals() {
                 animals.animals.map((animal: IAnimal) => {
                     return (<Link to={"/animal/" + animal.id} key={animal.id}
                         className="card">
-                        <LandingPageWrapperSm>
+                        <FlexWrapperSm>
                             <GridImageWrapper
-                                backgroundimg={checkBgImage(animal)}
-                                backgroundpos={animal.id === 12 ? "center" : "top"}>
+                                backgroundImg={checkBgImage(animal)}
+                                backgroundPos={animal.id === 12 ? "center" : "top"}>
                             </GridImageWrapper>
                             <TextWrapper>
                                 {animal.isFed ?
                                     <StyledParagraph
                                         align="left"
                                         direction="row"
-                                        querydirection="row">
+                                        queryDirection="row">
                                         <NotHungryIcon />
                                         Jag är mätt!</StyledParagraph> :
                                     <StyledParagraph
                                         align="left"
                                         direction="row"
-                                        querydirection="row">
+                                        queryDirection="row">
                                         <HungryIcon />
                                         Jag är hungrig!</StyledParagraph>}
                                 <SmallHeading
-                                    fontsize="1.5rem"
+                                    fontSize="1.5rem"
                                     padding="10px 0px">{animal.name}</SmallHeading>
                                 <StyledParagraph
-                                    fontsize="0.9rem">{animal.shortDescription}</StyledParagraph>
+                                    fontSize="0.9rem">{animal.shortDescription}</StyledParagraph>
                             </TextWrapper>
-                        </LandingPageWrapperSm>
+                        </FlexWrapperSm>
                     </Link>
                     )
                 })

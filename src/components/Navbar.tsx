@@ -6,7 +6,7 @@ import { StyledNavbar } from './styledComponents/Navbar/StyledNavbar'
 export default function Navbar() {
     return (
         <StyledNavbar>
-            <BigHeading fontsize="2.2rem">Våra djur</BigHeading>
+            <BigHeading fontSize="2.2rem">Våra djur</BigHeading>
         </StyledNavbar>
 
     )
