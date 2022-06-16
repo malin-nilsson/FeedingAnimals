@@ -8,6 +8,7 @@ import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
 import { AnimalContext, AnimalInterface, defaultValue } from './contexts/AnimalContext';
+import { getHoursSinceFed, updateToHungry } from './utils/Utils';
 
 function App() {
   const [animals, setAnimals] = useState<AnimalInterface>(defaultValue);
@@ -33,9 +34,11 @@ function App() {
   useEffect(() => {
     if (animals.animals.length !== 0) return;
 
+    // Get animals from local storage
     const animalStorage = localStorage.getItem("Animals") || "[]";
     setAnimals({ ...animals, loader: false, animals: JSON.parse(animalStorage) });
 
+    // Get animals from api if animals don't exist in local storage
     if (animalStorage.length === 0) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
@@ -51,13 +54,13 @@ function App() {
     const newAnimalList = [...animals.animals];
 
     for (let i = 0; i < newAnimalList.length; i++) {
-      let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
+      // Check if animal hasn't been fed for 4 hours
+      let hoursSinceFed = getHoursSinceFed(newAnimalList[i])
 
-      /* If it's been 4 hours since animal was fed,
-      enable feed button so user can feed animal again */
-      if (newAnimalList[i].isFed === true && hoursSinceFed >= 4) {
-        newAnimalList[i].isFed = false;
-        newAnimalList[i].lastFed = new Date().toString();
+      /* If animal hasn't eaten in 4 hours, 
+      show animal as hungry again */
+      if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
+        updateToHungry(newAnimalList[i]);
         setAnimal(newAnimalList[i])
         newAnimalList.splice(i, 1, newAnimalList[i]);
         saveToLocalStorage(newAnimalList);
@@ -66,15 +69,15 @@ function App() {
     }
   }, [animals]);
 
-  // Toggle isFed, set lastFed to current date and update local storage
+  // Feed animal and update local storage
   animals.feedAnimal = (a: IAnimal) => {
+    const newAnimalList = [...animals.animals];
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
     for (let i = 0; i < sameItem.length; i++) {
       if (sameItem[i].id === a.id) {
-        a.isFed = !a.isFed;
+        a.isFed = true;
         a.lastFed = new Date().toString();
         setAnimal(a);
-        const newAnimalList = [...animals.animals];
         newAnimalList.splice(i, 1, a);
         setAnimals({ ...animals, animals: newAnimalList });
         saveToLocalStorage(newAnimalList);

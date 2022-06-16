@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { AnimalContext } from '../../contexts/AnimalContext';
 import { IAnimal } from '../../models/IAnimal';
+import { getHoursSinceFed } from '../../utils/Utils';
 import HungryIcon from '../HungryIcon';
 import NotHungryIcon from '../NotHungryIcon';
 import { StyledButton } from '../styledComponents/Buttons/StyledButtons';
@@ -86,8 +87,9 @@ export default function Animal() {
 
         /* If it's been more than 4 hours since animal 
         was fed, make it possible to feed animal again */
-        let hoursSinceFed = Math.floor((new Date().getTime() - new Date(specificAnimal.lastFed).getTime()) / (1000 * 60 * 60));
-        if (hoursSinceFed >= 3) {
+        let hoursSinceFed = getHoursSinceFed(specificAnimal);
+
+        if (hoursSinceFed >= 1) {
             setDisabled(false)
             animals.feedAnimal(specificAnimal)
         }
