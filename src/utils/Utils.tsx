@@ -8,3 +8,7 @@ export const toggleHungry = (animal: IAnimal) => {
 export const getHoursSinceFed = (animal: IAnimal) => {
     return Math.floor((new Date().getTime() - new Date(animal.lastFed).getTime()) / (1000 * 60 * 60));
 }
+
+export const saveToLocalStorage = (list: IAnimal[]) => {
+    localStorage.setItem("Animals", JSON.stringify(list));
+}

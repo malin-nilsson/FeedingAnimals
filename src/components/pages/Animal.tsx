@@ -46,6 +46,7 @@ export default function Animal() {
         }
     }
 
+    // Loader
     const loaderHTML = (
         <>
             <StyledLoader>

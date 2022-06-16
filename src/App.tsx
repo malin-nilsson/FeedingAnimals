@@ -8,7 +8,7 @@ import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
 import { AnimalContext, AnimalInterface, defaultValue } from './contexts/AnimalContext';
-import { getHoursSinceFed, toggleHungry } from './utils/Utils';
+import { getHoursSinceFed, saveToLocalStorage, toggleHungry } from './utils/Utils';
 
 function App() {
   const [animals, setAnimals] = useState<AnimalInterface>(defaultValue);
@@ -27,10 +27,6 @@ function App() {
     }
   );
 
-  const saveToLocalStorage = (animalList: IAnimal[]) => {
-    localStorage.setItem("Animals", JSON.stringify(animalList));
-  };
-
   useEffect(() => {
     if (animals.animals.length !== 0) return;
 
@@ -38,7 +34,7 @@ function App() {
     const animalStorage = localStorage.getItem("Animals") || "[]";
     setAnimals({ ...animals, loader: false, animals: JSON.parse(animalStorage) });
 
-    // Get animals from api if animals don't exist in local storage
+    // Get animals from api if animal storage doesn't exist
     if (animalStorage.length === 0) {
       axios
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
@@ -50,11 +46,11 @@ function App() {
   });
 
   useEffect(() => {
+    // Check if there are hungry animals
     if (animals.animals.length < 1) return;
     const newAnimalList = [...animals.animals];
 
     for (let i = 0; i < newAnimalList.length; i++) {
-      // Check if animal is hungry
       let hoursSinceFed = getHoursSinceFed(newAnimalList[i])
       if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
         toggleHungry(newAnimalList[i]);
