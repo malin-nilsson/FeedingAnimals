@@ -8,7 +8,7 @@ import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
 import { AnimalContext, AnimalInterface, defaultValue } from './contexts/AnimalContext';
-import { getHoursSinceFed, updateToHungry } from './utils/Utils';
+import { getHoursSinceFed, toggleHungry } from './utils/Utils';
 
 function App() {
   const [animals, setAnimals] = useState<AnimalInterface>(defaultValue);
@@ -54,13 +54,10 @@ function App() {
     const newAnimalList = [...animals.animals];
 
     for (let i = 0; i < newAnimalList.length; i++) {
-      // Check if animal hasn't been fed for 4 hours
+      // Check if animal is hungry
       let hoursSinceFed = getHoursSinceFed(newAnimalList[i])
-
-      /* If animal hasn't eaten in 4 hours, 
-      show animal as hungry again */
       if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
-        updateToHungry(newAnimalList[i]);
+        toggleHungry(newAnimalList[i]);
         setAnimal(newAnimalList[i])
         newAnimalList.splice(i, 1, newAnimalList[i]);
         saveToLocalStorage(newAnimalList);
@@ -69,14 +66,13 @@ function App() {
     }
   }, [animals]);
 
-  // Feed animal and update local storage
+  // Feed animal
   animals.feedAnimal = (a: IAnimal) => {
     const newAnimalList = [...animals.animals];
     let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
     for (let i = 0; i < sameItem.length; i++) {
       if (sameItem[i].id === a.id) {
-        a.isFed = true;
-        a.lastFed = new Date().toString();
+        toggleHungry(a)
         setAnimal(a);
         newAnimalList.splice(i, 1, a);
         setAnimals({ ...animals, animals: newAnimalList });
