@@ -84,10 +84,10 @@ export default function Animal() {
             setDisabled(true);
         }
 
-        /* If there's been more than 4 hours since animal 
-        was fed, enable button and toggle isFed */
+        /* If it's been more than 4 hours since animal 
+        was fed, make it possible to feed animal again */
         let hoursSinceFed = Math.floor((new Date().getTime() - new Date(specificAnimal.lastFed).getTime()) / (1000 * 60 * 60));
-        if (hoursSinceFed >= 1) {
+        if (hoursSinceFed >= 3) {
             setDisabled(false)
             animals.feedAnimal(specificAnimal)
         }

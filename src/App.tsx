@@ -53,9 +53,9 @@ function App() {
     for (let i = 0; i < newAnimalList.length; i++) {
       let hoursSinceFed = Math.floor((new Date().getTime() - new Date(newAnimalList[i].lastFed).getTime()) / (1000 * 60 * 60));
 
-      /* If there's been 4 hours since animal was fed,
+      /* If it's been 4 hours since animal was fed,
       enable feed button so user can feed animal again */
-      if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
+      if (newAnimalList[i].isFed === true && hoursSinceFed >= 4) {
         newAnimalList[i].isFed = false;
         newAnimalList[i].lastFed = new Date().toString();
         setAnimal(newAnimalList[i])

@@ -13,7 +13,7 @@ interface IParagraphProps {
   queryPadding?: string,
   queryJustify?: string,
   queryAlign?: string,
-  bgColor?: string
+  bgColor?: string,
 }
 
 export const StyledParagraph = styled.p`
