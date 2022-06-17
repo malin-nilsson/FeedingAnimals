@@ -8,7 +8,7 @@ import NotFound from './components/pages/NotFound';
 import axios from 'axios';
 import { IAnimal } from './models/IAnimal';
 import { AnimalContext, AnimalInterface, defaultValue } from './contexts/AnimalContext';
-import { getHoursSinceFed, saveToLocalStorage, toggleHungry } from './utils/Utils';
+import { getHoursSinceFed, getLocalStorage, setLocalStorage, toggleHungry } from './utils/Utils';
 
 function App() {
   const [animals, setAnimals] = useState<AnimalInterface>(defaultValue);
@@ -31,8 +31,8 @@ function App() {
     if (animals.animals.length !== 0) return;
 
     // Get animals from local storage
-    const animalStorage = localStorage.getItem("Animals") || "[]";
-    setAnimals({ ...animals, loader: false, animals: JSON.parse(animalStorage) });
+    const animalStorage = getLocalStorage();
+    setAnimals({ ...animals, loader: false, animals: animalStorage });
 
     // Get animals from api if animal storage doesn't exist
     if (animalStorage.length === 0) {
@@ -40,7 +40,7 @@ function App() {
         .get<IAnimal[]>("https://animals.azurewebsites.net/api/animals")
         .then((response) => {
           setAnimals({ ...animals, loader: false, animals: response.data });
-          saveToLocalStorage(response.data);
+          setLocalStorage(response.data);
         });
     }
   });
@@ -56,7 +56,7 @@ function App() {
         toggleHungry(newAnimalList[i]);
         setAnimal(newAnimalList[i])
         newAnimalList.splice(i, 1, newAnimalList[i]);
-        saveToLocalStorage(newAnimalList);
+        setLocalStorage(newAnimalList);
         setAnimals({ ...animals, loader: false, animals: newAnimalList });
       }
     }
@@ -65,14 +65,14 @@ function App() {
   // Feed animal
   animals.feedAnimal = (a: IAnimal) => {
     const newAnimalList = [...animals.animals];
-    let sameItem = JSON.parse(localStorage.getItem("Animals") || "[]");
+    let sameItem = getLocalStorage();
     for (let i = 0; i < sameItem.length; i++) {
       if (sameItem[i].id === a.id) {
         toggleHungry(a)
         setAnimal(a);
         newAnimalList.splice(i, 1, a);
         setAnimals({ ...animals, animals: newAnimalList });
-        saveToLocalStorage(newAnimalList);
+        setLocalStorage(newAnimalList);
       }
     }
   }

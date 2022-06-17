@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { AnimalContext } from '../../contexts/AnimalContext';
 import { IAnimal } from '../../models/IAnimal';
-import { getHoursSinceFed } from '../../utils/Utils';
+import { getHoursSinceFed, getLocalStorage } from '../../utils/Utils';
 import HungryIcon from '../HungryIcon';
 import NotHungryIcon from '../NotHungryIcon';
 import { StyledButton } from '../styledComponents/Buttons/StyledButtons';
@@ -68,10 +68,10 @@ export default function Animal() {
                     setSpecificAnimal(animals.animals[i]);
                 }
             }
-            /* If user lands on /animal/:id directly,
+            /* If user lands on animal/:id directly,
             without coming from landing page */
         } else {
-            const animalStorage = JSON.parse(localStorage.getItem("Animals") || "[]");
+            const animalStorage: IAnimal[] = getLocalStorage();
             for (let i = 0; i < animalStorage.length; i++) {
                 if (animalStorage[i].id.toString() === params.id) {
                     setSpecificAnimal(animalStorage[i]);
@@ -86,7 +86,7 @@ export default function Animal() {
             setDisabled(true);
         }
 
-        /* If it's been more than 4 hours since animal 
+        /* If it's been more than 3 hours since animal 
         was fed, make it possible to feed animal again */
         let hoursSinceFed = getHoursSinceFed(specificAnimal);
 
@@ -163,7 +163,7 @@ export default function Animal() {
                                     fontSize="1.1rem"
                                     align="center"
                                     queryAlign="left">
-                                    {specificAnimal.isFed && ("Djuren kan matas var fjärde timme.")}
+                                    {specificAnimal.isFed && ("Djuren kan matas var tredje timme.")}
                                 </StyledParagraph>
                             </>
                         )
