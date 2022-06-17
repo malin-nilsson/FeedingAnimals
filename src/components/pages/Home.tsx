@@ -1,8 +1,15 @@
+/////////////
+// IMPORTS //
+/////////////
 import React, { useContext, useEffect, useState } from 'react'
+// Context
 import { AnimalContext } from '../../contexts/AnimalContext';
+// Models
 import { IAnimal } from '../../models/IAnimal';
+// Components
 import FoodIcon from '../FoodIcon';
 import ShowAllAnimals from '../ShowAllAnimals';
+// Styled components
 import { StyledParagraph } from '../styledComponents/Text/StyledParagraphs';
 import { FlexWrapperLg } from '../styledComponents/Wrappers/StyledWrappers';
 

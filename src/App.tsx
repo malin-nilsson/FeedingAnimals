@@ -1,13 +1,21 @@
+/////////////
+// IMPORTS //
+/////////////
 import React, { useEffect, useState } from 'react';
-import './App.css';
+// Routing
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// Components
 import Home from './components/pages/Home';
 import Layout from './components/pages/Layout';
 import Animal from './components/pages/Animal';
 import NotFound from './components/pages/NotFound';
+// Axios
 import axios from 'axios';
+// Models
 import { IAnimal } from './models/IAnimal';
+// Context
 import { AnimalContext, AnimalInterface, defaultValue } from './contexts/AnimalContext';
+// Utils
 import { getHoursSinceFed, getLocalStorage, setLocalStorage, toggleHungry } from './utils/Utils';
 
 function App() {

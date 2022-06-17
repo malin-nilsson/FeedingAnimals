@@ -1,5 +1,8 @@
+/////////////
+// IMPORTS //
+/////////////
 import React from 'react'
-import { Link } from 'react-router-dom'
+// Styled componenets
 import { BigHeading } from './styledComponents/Headings/StyledHeadings'
 import { StyledNavbar } from './styledComponents/Navbar/StyledNavbar'
 

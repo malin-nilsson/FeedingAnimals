@@ -1,10 +1,19 @@
+/////////////
+// IMPORTS //
+/////////////
 import React, { useContext, useEffect, useState } from 'react'
+// Routing
 import { Link, useParams } from 'react-router-dom';
+// Context
 import { AnimalContext } from '../../contexts/AnimalContext';
+// Models
 import { IAnimal } from '../../models/IAnimal';
+// Utils
 import { getHoursSinceFed, getLocalStorage } from '../../utils/Utils';
+// Components
 import HungryIcon from '../HungryIcon';
 import NotHungryIcon from '../NotHungryIcon';
+// Styled components
 import { StyledButton } from '../styledComponents/Buttons/StyledButtons';
 import { SmallHeading } from '../styledComponents/Headings/StyledHeadings';
 import { StyledLoader } from '../styledComponents/Loader/StyledLoader';

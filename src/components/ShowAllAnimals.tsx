@@ -1,13 +1,21 @@
-import React, { useContext, useEffect } from 'react'
+/////////////
+// IMPORTS //
+/////////////
+import React, { useContext } from 'react'
+// Models
 import { IAnimal } from '../models/IAnimal';
+// Styled components
 import { GridImageWrapper, FlexWrapperSm, TextWrapper } from './styledComponents/Wrappers/StyledWrappers';
 import { SmallHeading } from './styledComponents/Headings/StyledHeadings';
-import { Link } from 'react-router-dom';
 import { StyledParagraph } from './styledComponents/Text/StyledParagraphs';
+import { StyledLoader } from './styledComponents/Loader/StyledLoader';
+// Routing
+import { Link } from 'react-router-dom';
+// Components
 import NotHungryIcon from './NotHungryIcon';
 import HungryIcon from './HungryIcon';
+// Context
 import { AnimalContext } from '../contexts/AnimalContext';
-import { StyledLoader } from './styledComponents/Loader/StyledLoader';
 
 export default function ShowAllAnimals() {
     let animals = useContext(AnimalContext);

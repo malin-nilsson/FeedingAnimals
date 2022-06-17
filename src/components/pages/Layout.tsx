@@ -1,8 +1,14 @@
+/////////////
+// IMPORTS //
+/////////////
 import React from 'react'
+// Routing
 import { Outlet } from 'react-router'
+// Styled components
 import GlobalStyle from '../GlobalStyles'
-import Navbar from '../Navbar'
 import { LayoutWrapper } from '../styledComponents/Wrappers/StyledWrappers'
+// Components
+import Navbar from '../Navbar'
 
 export default function Layout() {
     return (
