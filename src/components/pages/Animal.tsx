@@ -90,7 +90,7 @@ export default function Animal() {
         was fed, make it possible to feed animal again */
         let hoursSinceFed = getHoursSinceFed(specificAnimal);
 
-        if (hoursSinceFed >= 1) {
+        if (hoursSinceFed >= 3) {
             setDisabled(false)
             animals.feedAnimal(specificAnimal)
         }

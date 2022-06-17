@@ -52,7 +52,7 @@ function App() {
 
     for (let i = 0; i < newAnimalList.length; i++) {
       let hoursSinceFed = getHoursSinceFed(newAnimalList[i])
-      if (newAnimalList[i].isFed === true && hoursSinceFed >= 1) {
+      if (newAnimalList[i].isFed === true && hoursSinceFed >= 4) {
         toggleHungry(newAnimalList[i]);
         setAnimal(newAnimalList[i])
         newAnimalList.splice(i, 1, newAnimalList[i]);
