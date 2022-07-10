@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# Feeding Animals
+React "zoo" where users can get info about the animals, feed them and get a notification when they're hungry. Created with React, TypeScript and Sass.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Installation
+1. Clone the repo\
+`git clone https://github.com/malin-nilsson/FeedingAnimals`
+
+2. Install npm packages\
+`npm install`
+
+3. Run React\
+`npm start`
+
+## Author
+- GitHub - [malin-nilsson](https://github.com/malin-nilsson)
 
 ## Available Scripts
 
