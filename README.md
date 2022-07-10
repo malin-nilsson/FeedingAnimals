@@ -1,5 +1,5 @@
 # Feeding Animals
-React "zoo" where users can get info about the animals, feed them and get a notification when they're hungry. Created with React, TypeScript and Sass.
+React "zoo" where users can get info about the animals, feed them and get a notification when they're hungry. School assignment created with React, TypeScript, Sass and Axios, using React Context API and React Router.
 
 ## Installation
 1. Clone the repo\
